@@ -1,7 +1,7 @@
 package com.fast.miniproject.auth.jwt;
 
 import com.fast.miniproject.auth.dto.LoginReqDTO;
-import com.fast.miniproject.auth.service.Impl.TokenServiceImpl;
+import com.fast.miniproject.auth.service.TokenService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -21,12 +21,12 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
-    private final TokenServiceImpl tokenServiceImpl;
+    private final TokenService tokenService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token=request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if(!tokenServiceImpl.checkLogout(token)) {
+        if(!tokenService.checkLogout(token)) {
 
             Claims claims = jwtProvider.tokenToUser(token);
             if (claims != null) {
