@@ -16,14 +16,14 @@ public class Basket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "b_id")
+    @Column(name = "basket_id")
     private Long basketId;
 
-    @ManyToOne(targetEntity=Product.class, fetch=FetchType.EAGER) // (1)
-    @JoinColumn(name="products") // (2)
+    @ManyToOne(targetEntity=Product.class, fetch=FetchType.LAZY)
+    @JoinColumn(name="product")
     private Product product;
 
-    @ManyToOne(targetEntity= User.class, fetch=FetchType.EAGER) // (1)
-    @JoinColumn(name="members") // (2)
+    @ManyToOne(targetEntity= User.class, fetch=FetchType.LAZY)
+    @JoinColumn(name="member")
     private User user;
 }

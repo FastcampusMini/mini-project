@@ -10,11 +10,11 @@ import javax.persistence.*;
 @Setter
 @Builder
 @Entity
-@Table(name="products")
+@Table(name="product")
 public class Product {
 
     @Id
-    @Column(name="p_id")
+    @Column(name="product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 

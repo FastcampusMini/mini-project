@@ -19,6 +19,7 @@ public class SignupReqDTO {
     private String gender;
     private String phone;
     private Long salary;
+    private String job;
 
     public User toEntity(){
         switch (gender){
@@ -36,6 +37,7 @@ public class SignupReqDTO {
                 .gender(this.gender)
                 .phone(this.phone)
                 .salary(this.salary)
+                .job(this.job)
                 .build();
     }
 

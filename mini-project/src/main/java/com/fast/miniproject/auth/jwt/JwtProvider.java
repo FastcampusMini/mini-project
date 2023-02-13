@@ -19,10 +19,8 @@ public class JwtProvider {
                 .setIssuer("Mini")
                 .setIssuedAt(date)
                 .setExpiration(new Date(date.getTime()+3600000))
+                .claim("id",user.getMemberId())
                 .claim("email",user.getEmail())
-                .claim("name",user.getName())
-                .claim("age",user.getAge())
-                .claim("salary",user.getSalary())
                 .signWith(SignatureAlgorithm.HS256,"23029")
                 .compact();
     }
