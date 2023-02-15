@@ -1,4 +1,4 @@
-package com.fast.miniproject.search.Service;
+package com.fast.miniproject.search.service;
 
 import com.fast.miniproject.product.dto.ProductDTO;
 import com.fast.miniproject.search.repository.SearchProductRepository;

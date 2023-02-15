@@ -1,8 +1,8 @@
-package com.fast.miniproject.search.Controller;
+package com.fast.miniproject.search.controller;
 
 import com.fast.miniproject.global.response.ResponseDTO;
 import com.fast.miniproject.product.dto.ProductDTO;
-import com.fast.miniproject.search.Service.SearchProductService;
+import com.fast.miniproject.search.service.SearchProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
