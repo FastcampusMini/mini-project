@@ -21,7 +21,7 @@ public class Order {
     @Column(name = "order_id")
     private Long orderId;
 
-    @ManyToOne(targetEntity= User.class, fetch=FetchType.LAZY)
+    @ManyToOne(targetEntity= User.class, fetch=FetchType.EAGER)
     @JoinColumn(name="member")
     private User user;
 

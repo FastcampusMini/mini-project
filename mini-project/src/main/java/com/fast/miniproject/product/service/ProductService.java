@@ -15,4 +15,6 @@ public interface ProductService {
 
     ResponseDTO<?> recommendProduct(String email);
     ResponseDTO<?> buyProduct(ArrayList<Integer> products_id_list, LoginReqDTO user);
+
+    ResponseDTO<?> orderCheck(LoginReqDTO dto);
 }

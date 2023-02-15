@@ -39,4 +39,9 @@ public class ProductController {
     public ResponseDTO<?> buyProducts(@AuthenticationPrincipal LoginReqDTO user, ProductIdList products_id_list){
         return productService.buyProduct(products_id_list.getProducts_id_list(),user);
     }
+
+    @GetMapping("/product/order/check")
+    public ResponseDTO<?> orderCheck(@AuthenticationPrincipal LoginReqDTO dto){
+         return productService.orderCheck(dto);
+    }
 }

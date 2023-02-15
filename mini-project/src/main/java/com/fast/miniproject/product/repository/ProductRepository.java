@@ -13,7 +13,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     List<Product> findByPriceLessThanEqual(int price);
 
     @Query(nativeQuery = true,value = "SELECT * FROM product as p WHERE p.product_id IN (:id_list)")
-    List<Product> findByProductId(@Param("id_list") List<Integer> id_list);
+    List<Product> findAllByProductId(@Param("id_list") List<Integer> id_list);
 
 
 }

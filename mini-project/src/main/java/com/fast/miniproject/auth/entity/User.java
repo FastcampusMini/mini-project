@@ -49,6 +49,9 @@ public class User {
     @Column(name = "member_job")
     private String job;
 
+    @Column(name = "deleteCheck")
+    private String deleteCheck;
+
     @CreationTimestamp
     @Column(name = "created_date")
     private LocalDateTime created_date;
@@ -56,5 +59,12 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_date")
     private LocalDateTime updated_date;
-    
+
+    public void update(String password, String phone, Long salary, String job) {
+        this.password = password;
+        this.phone = phone;
+        this.salary = salary;
+        this.job = job;
+    }
+
 }

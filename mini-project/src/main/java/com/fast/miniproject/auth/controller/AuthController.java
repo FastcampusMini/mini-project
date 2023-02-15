@@ -2,8 +2,9 @@ package com.fast.miniproject.auth.controller;
 
 
 import com.fast.miniproject.auth.dto.LoginReqDTO;
+import com.fast.miniproject.auth.dto.PatchUserReqDTO;
 import com.fast.miniproject.auth.dto.SignupReqDTO;
-import com.fast.miniproject.auth.dto.UserResDTO;
+import com.fast.miniproject.auth.dto.PatchUserResDTO;
 import com.fast.miniproject.auth.service.TokenService;
 import com.fast.miniproject.auth.service.UserService;
 import com.fast.miniproject.global.response.ResponseDTO;
@@ -30,13 +31,18 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseDTO<?> logout(@RequestHeader(name="Authorization") String header){
+    public ResponseDTO<?> logout(@RequestHeader(name = "Authorization") String header) {
         return tokenService.logout(header);
     }
-//    @PostMapping("/api/user")
-//    public UserResDTO editUser(@RequestHeader(name="Authorization") LoginReqDTO loginReqDTO) {
-//        return userService.editUser(loginReqDTO);
-//    }
+    @PostMapping("/api/user")
+    public ResponseDTO<?> editUser(@AuthenticationPrincipal LoginReqDTO loginReqDTO) {
+        return userService.editUser(loginReqDTO);
+    }
+
+    @PatchMapping("/api/user/update")
+    public ResponseDTO<?> updateUser(@AuthenticationPrincipal LoginReqDTO loginReqDTO, PatchUserReqDTO patchUserReqDTO) {
+        return userService.updateUser(loginReqDTO,patchUserReqDTO);
+    }
 
     @GetMapping("/hello")
     @PreAuthorize("hasAnyRole('USER')") // USER 권한만 호출 가능
@@ -45,7 +51,7 @@ public class AuthController {
     }
 
 
-
     //제발 되라
+
 
 }

@@ -19,6 +19,7 @@ public class OrderDetail {
 
     public OrderDetail(List<OrderProductBridge> list){
         this.order=list.get(0).getOrder();
+        order.setUser(null);
         List<PurchasedProduct> products= new ArrayList<>();
         for (OrderProductBridge orderProductBridge: list){
             products.add(orderProductBridge.getPurchasedProduct());

@@ -84,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseDTO<?> buyProduct(ArrayList<Integer> products_id_list, LoginReqDTO dto) {
         User user = userRepository.findByEmail(dto.getEmail()).get();
-        List<Product> productList = productRepository.findByProductId(products_id_list);
+        List<Product> productList = productRepository.findAllByProductId(products_id_list);
         if (user==null || productList.size()==0)return new ErrorResponseDTO(500,"구매에 실패하였습니다.").toResponse();
         if(!isAvailableToPurchase(user,productList))return new ErrorResponseDTO(500,"대출 가능 금액을 초과하였습니다.").toResponse();
 
@@ -102,9 +102,26 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public ResponseDTO<?> orderCheck(LoginReqDTO dto) {
+        try {
+            User user = userRepository.findByEmail(dto.getEmail()).get();
+            List<Order> orderList = orderRepository.findAllByUser(user);
+            List<OrderDetail> resultList = new ArrayList<>();
+            for (Order order:orderList){
+                OrderDetail orderDetail = new OrderDetail(orderProductBridgeRepository.findAllByOrder(order));
+                resultList.add(orderDetail);
+            }
+            return new ResponseDTO<>(resultList);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseDTO<>("failed");
+    }
+
     private boolean isAvailableToPurchase(User user,List<Product> productList){
         List<Order> orderList = orderRepository.findAllByUser(user);
-        List<OrderProductBridge> list =orderProductBridgeRepository.findByOrder(orderList);
+        List<OrderProductBridge> list =orderProductBridgeRepository.findAllByOrderList(orderList);
         long spent =0;
         for (OrderProductBridge op : list){
             spent+=op.getPurchasedProduct().getPurchasedProductPrice();

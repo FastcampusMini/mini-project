@@ -1,9 +1,6 @@
 package com.fast.miniproject.product.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "purchased_product")
+@ToString
 public class PurchasedProduct {
 
     @Id
@@ -37,7 +35,7 @@ public class PurchasedProduct {
     @Column(name="purchased_product_detail")
     private String purchasedProductDetail;
 
-    @ManyToOne(targetEntity=Product.class, fetch=FetchType.LAZY)
+    @ManyToOne(targetEntity=Product.class, fetch=FetchType.EAGER)
     @JoinColumn(name="product")
     private Product product;
 

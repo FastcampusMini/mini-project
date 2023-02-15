@@ -3,17 +3,14 @@ package com.fast.miniproject.auth.dto;
 import com.fast.miniproject.auth.entity.User;
 import lombok.*;
 
-import javax.persistence.Column;
-
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UserResDTO {
+public class PatchUserResDTO {
 
-    private Long memberId;
     private String email;
     private String password;
     private String name;
@@ -24,8 +21,7 @@ public class UserResDTO {
     private String job;
 
 
-    public UserResDTO(User user) {
-        this.memberId = user.getMemberId();
+    public PatchUserResDTO(User user) {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.name = user.getName();

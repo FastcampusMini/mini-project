@@ -17,11 +17,11 @@ public class OrderProductBridge {
     @Column(name = "bridge_id")
     private Long bridgeId;
 
-    @ManyToOne(targetEntity=PurchasedProduct.class, fetch=FetchType.LAZY)
+    @ManyToOne(targetEntity=PurchasedProduct.class, fetch=FetchType.EAGER)
     @JoinColumn(name="purchased_product")
     private PurchasedProduct purchasedProduct;
 
-    @ManyToOne(targetEntity=Order.class, fetch=FetchType.LAZY)
+    @ManyToOne(targetEntity=Order.class, fetch=FetchType.EAGER)
     @JoinColumn(name="orders")
     private Order order;
 
