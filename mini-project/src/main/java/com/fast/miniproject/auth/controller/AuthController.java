@@ -44,6 +44,11 @@ public class AuthController {
         return userService.updateUser(loginReqDTO,patchUserReqDTO);
     }
 
+    @DeleteMapping("/api/user/delete")
+    public ResponseDTO<?> deleteUser(@AuthenticationPrincipal LoginReqDTO loginReqDTO, String password) {
+        return userService.deleteUser(loginReqDTO,password);
+    }
+
     @GetMapping("/hello")
     @PreAuthorize("hasAnyRole('USER')") // USER 권한만 호출 가능
     public String hello(@AuthenticationPrincipal LoginReqDTO loginReqDTO) {

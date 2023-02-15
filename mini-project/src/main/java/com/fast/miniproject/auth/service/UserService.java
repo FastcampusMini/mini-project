@@ -16,7 +16,11 @@ public interface UserService {
 
     public ResponseDTO<?> editUser(LoginReqDTO loginReqDTO) ;
     public ResponseDTO<?> updateUser(LoginReqDTO loginReqDTO, PatchUserReqDTO patchUserReqDTO);
+<<<<<<< HEAD
 
 
 
+=======
+    public ResponseDTO<?> deleteUser(LoginReqDTO loginReqDTO, String password);
+>>>>>>> de139362949335d3045154862311694501424a39
 }

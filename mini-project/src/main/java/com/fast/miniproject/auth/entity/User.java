@@ -67,6 +67,12 @@ public class User {
         this.job = job;
     }
 
+<<<<<<< HEAD
 
+=======
+    public void delete(String withdraw) {
+        this.deleteCheck = withdraw;
+    }
+>>>>>>> de139362949335d3045154862311694501424a39
 
 }
