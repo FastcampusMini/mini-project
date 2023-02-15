@@ -10,10 +10,7 @@ import com.fast.miniproject.global.response.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,6 +43,8 @@ public class AuthController {
     public String hello(@AuthenticationPrincipal LoginReqDTO loginReqDTO) {
         return loginReqDTO.getEmail() + ", 안녕하세요!";
     }
+
+
 
     //제발 되라
 

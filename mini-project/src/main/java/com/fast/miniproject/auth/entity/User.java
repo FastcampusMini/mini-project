@@ -56,5 +56,5 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_date")
     private LocalDateTime updated_date;
-
+    
 }
