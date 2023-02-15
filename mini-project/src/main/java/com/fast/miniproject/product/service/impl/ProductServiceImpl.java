@@ -51,34 +51,44 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseDTO<?> selectProduct() {
 
-        List<Product> product = productRepository.findAll();
+        try{
+            List<Product> product = productRepository.findAll();
 
 
-        List<ProductDTO> productList = product.stream()
-                .map(pro -> new ProductDTO(pro.getPrice(),pro.getBrand(),pro.getLogo(),pro.getName(),pro.getRate(),pro.getDetail()))
-                .collect(Collectors.toList());
+            List<ProductDTO> productList = product.stream()
+                    .map(pro -> new ProductDTO(pro.getPrice(),pro.getBrand(),pro.getLogo(),pro.getName(),pro.getRate(),pro.getDetail()))
+                    .collect(Collectors.toList());
 
-        return new ResponseDTO<>(productList);
+            return new ResponseDTO<>(productList);
+        }catch(Exception e){
+            return new ErrorResponseDTO(500,"상품 목록을 불러오지 못 했습니다").toResponse();
+        }
+
 
     }
 
     @Override
     public ResponseDTO<?> recommendProduct(String email) {
 
-        User user  = userRepository.findByEmail(email).get();
+        try{
 
-        int limitAmount =(int) (user.getSalary() * 2);
+            User user  = userRepository.findByEmail(email).get();
 
-        List<Product> product = productRepository.findByPriceLessThanEqual(limitAmount);
+            int limitAmount =(int) (user.getSalary() * 2);
 
-        List<ProductDTO> productList = product.stream()
-                .map(pro -> new ProductDTO(pro.getPrice(),pro.getBrand(),pro.getLogo(),pro.getName(),pro.getRate(),pro.getDetail()))
-                .collect(Collectors.toList());
+            List<Product> product = productRepository.findByPriceLessThanEqual(limitAmount);
+
+            List<ProductDTO> productList = product.stream()
+                    .map(pro -> new ProductDTO(pro.getPrice(),pro.getBrand(),pro.getLogo(),pro.getName(),pro.getRate(),pro.getDetail()))
+                    .collect(Collectors.toList());
+
+            return new ResponseDTO<>(productList);
+        }catch(Exception e){
+            return new ErrorResponseDTO(500,"추천 상품을 불러오지 못 했습니다").toResponse();
+        }
 
 
 
-
-        return new ResponseDTO<>(productList);
     }
 
     @Override
@@ -145,6 +155,13 @@ public class ProductServiceImpl implements ProductService {
             list.add(new PurchasedProduct(product));
         }
         return list;
+    }
+
+    @Override
+    public ResponseDTO<?> deleteOrder() {
+
+
+        return null;
     }
 
 

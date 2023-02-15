@@ -91,15 +91,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
     private void passwordMustBeSame(String requestPassword, String password) {
         if (!passwordEncoder.matches(requestPassword, password)) {
             throw new IllegalArgumentException();
         }
     }
-
     private String encodingPassword(String password) {
         return passwordEncoder.encode(password);
     }
+
 
 }
