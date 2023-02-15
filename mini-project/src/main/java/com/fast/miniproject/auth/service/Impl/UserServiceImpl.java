@@ -119,11 +119,10 @@ public class UserServiceImpl implements UserService {
         return passwordEncoder.encode(password);
     }
 
-<<<<<<< HEAD
-=======
+
     private boolean withDrawCheck(User user) {
         return user.getDeleteCheck() != null;
     }
->>>>>>> de139362949335d3045154862311694501424a39
+
 
 }
