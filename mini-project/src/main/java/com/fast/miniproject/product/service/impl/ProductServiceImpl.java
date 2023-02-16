@@ -127,6 +127,8 @@ public class ProductServiceImpl implements ProductService {
         return new ResponseDTO<>("failed");
     }
 
+
+
     private boolean isAvailableToPurchase(User user,List<Product> productList){
         List<Order> orderList = orderRepository.findAllByUser(user);
         List<OrderProductBridge> list =orderProductBridgeRepository.findAllByOrderList(orderList);
