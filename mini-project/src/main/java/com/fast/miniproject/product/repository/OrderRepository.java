@@ -1,14 +1,14 @@
 package com.fast.miniproject.product.repository;
 
 import com.fast.miniproject.auth.entity.User;
-import com.fast.miniproject.product.entity.Order;
+import com.fast.miniproject.product.entity.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface OrderRepository extends JpaRepository<Order,Long> {
+public interface OrderRepository extends JpaRepository<Orders,Long> {
 
 
-    List<Order> findAllByUser(User user);
+    List<Orders> findAllByUserOrderByPurchaseDate(User user);
 
 }

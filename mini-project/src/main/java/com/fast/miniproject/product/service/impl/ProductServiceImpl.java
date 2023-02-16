@@ -6,9 +6,10 @@ import com.fast.miniproject.auth.repository.UserRepository;
 import com.fast.miniproject.global.response.ErrorResponseDTO;
 import com.fast.miniproject.global.response.ResponseDTO;
 import com.fast.miniproject.product.dto.OrderDetail;
+import com.fast.miniproject.product.dto.OrderListResp;
 import com.fast.miniproject.product.dto.ProductDTO;
 import com.fast.miniproject.product.dto.ProductDetailDTO;
-import com.fast.miniproject.product.entity.Order;
+import com.fast.miniproject.product.entity.Orders;
 import com.fast.miniproject.product.entity.OrderProductBridge;
 import com.fast.miniproject.product.entity.Product;
 import com.fast.miniproject.product.entity.PurchasedProduct;
@@ -98,12 +99,11 @@ public class ProductServiceImpl implements ProductService {
 
         try {
             List<PurchasedProduct> purchasedProducts = purchaseProductRepository.saveAll(toSaveList(productList));
-            Order order = orderRepository.save(new Order(user));
+            Orders orders = orderRepository.save(new Orders(user));
             List<OrderProductBridge> orderList = new ArrayList<>();
             for (PurchasedProduct product: purchasedProducts){
-                orderList.add(orderProductBridgeRepository.save(new OrderProductBridge(product,order)));
+                orderList.add(orderProductBridgeRepository.save(new OrderProductBridge(product, orders)));
             }
-
             return new ResponseDTO(new OrderDetail(orderList));
         }catch (Exception e){
             return new ErrorResponseDTO(500,"구매에 실패하였습니다.").toResponse();
@@ -114,24 +114,22 @@ public class ProductServiceImpl implements ProductService {
     public ResponseDTO<?> orderCheck(LoginReqDTO dto) {
         try {
             User user = userRepository.findByEmail(dto.getEmail()).get();
-            List<Order> orderList = orderRepository.findAllByUser(user);
-            List<OrderDetail> resultList = new ArrayList<>();
-            for (Order order:orderList){
-                OrderDetail orderDetail = new OrderDetail(orderProductBridgeRepository.findAllByOrder(order));
-                resultList.add(orderDetail);
+            List<Orders> ordersList = orderRepository.findAllByUserOrderByPurchaseDate(user);
+            if (ordersList.size()>0){
+                List<OrderProductBridge> list = orderProductBridgeRepository.findAllByOrdersList(ordersList);
+                return new ResponseDTO<>(new OrderListResp(list));
             }
-            return new ResponseDTO<>(resultList);
         }catch (Exception e){
             e.printStackTrace();
         }
-        return new ResponseDTO<>("failed");
+        return new ErrorResponseDTO(500,"구매하신 상품이 없습니다.").toResponse();
     }
 
 
 
     private boolean isAvailableToPurchase(User user,List<Product> productList){
-        List<Order> orderList = orderRepository.findAllByUser(user);
-        List<OrderProductBridge> list =orderProductBridgeRepository.findAllByOrderList(orderList);
+        List<Orders> ordersList = orderRepository.findAllByUserOrderByPurchaseDate(user);
+        List<OrderProductBridge> list =orderProductBridgeRepository.findAllByOrdersList(ordersList);
         long spent =0;
         for (OrderProductBridge op : list){
             spent+=op.getPurchasedProduct().getPurchasedProductPrice();

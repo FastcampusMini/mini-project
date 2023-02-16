@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name="orders")
 @ToString
-public class Order {
+public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,10 +27,10 @@ public class Order {
 
     @CreationTimestamp
     @Column(name = "order_date")
-    private LocalDateTime order_date;
+    private LocalDateTime purchaseDate;
 
     @Builder
-    public Order(User user) {
+    public Orders(User user) {
         this.user = user;
     }
 }

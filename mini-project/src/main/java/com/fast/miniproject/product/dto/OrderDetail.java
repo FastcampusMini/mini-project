@@ -1,6 +1,6 @@
 package com.fast.miniproject.product.dto;
 
-import com.fast.miniproject.product.entity.Order;
+import com.fast.miniproject.product.entity.Orders;
 import com.fast.miniproject.product.entity.OrderProductBridge;
 import com.fast.miniproject.product.entity.PurchasedProduct;
 import lombok.Getter;
@@ -14,12 +14,12 @@ import java.util.List;
 @Setter
 @ToString
 public class OrderDetail {
-    private Order order;
+    private Orders orders;
     private List<PurchasedProduct> productList;
 
     public OrderDetail(List<OrderProductBridge> list){
-        this.order=list.get(0).getOrder();
-        order.setUser(null);
+        this.orders =list.get(0).getOrders();
+        orders.setUser(null);
         List<PurchasedProduct> products= new ArrayList<>();
         for (OrderProductBridge orderProductBridge: list){
             products.add(orderProductBridge.getPurchasedProduct());

@@ -21,13 +21,13 @@ public class OrderProductBridge {
     @JoinColumn(name="purchased_product")
     private PurchasedProduct purchasedProduct;
 
-    @ManyToOne(targetEntity=Order.class, fetch=FetchType.EAGER)
+    @ManyToOne(targetEntity= Orders.class, fetch=FetchType.EAGER)
     @JoinColumn(name="orders")
-    private Order order;
+    private Orders orders;
 
     @Builder
-    public OrderProductBridge(PurchasedProduct purchasedProduct, Order order) {
+    public OrderProductBridge(PurchasedProduct purchasedProduct, Orders orders) {
         this.purchasedProduct = purchasedProduct;
-        this.order = order;
+        this.orders = orders;
     }
 }
