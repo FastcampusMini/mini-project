@@ -5,10 +5,7 @@ import com.fast.miniproject.auth.entity.User;
 import com.fast.miniproject.auth.repository.UserRepository;
 import com.fast.miniproject.global.response.ErrorResponseDTO;
 import com.fast.miniproject.global.response.ResponseDTO;
-import com.fast.miniproject.product.dto.OrderDetail;
-import com.fast.miniproject.product.dto.OrderListResp;
-import com.fast.miniproject.product.dto.ProductDTO;
-import com.fast.miniproject.product.dto.ProductDetailDTO;
+import com.fast.miniproject.product.dto.*;
 import com.fast.miniproject.product.entity.Orders;
 import com.fast.miniproject.product.entity.OrderProductBridge;
 import com.fast.miniproject.product.entity.Product;
@@ -20,6 +17,7 @@ import com.fast.miniproject.product.repository.PurchaseProductRepository;
 import com.fast.miniproject.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,5 +154,30 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    @Transactional
+    @Override
+    public ResponseDTO<?> deleteBuy(LoginReqDTO dto, Long orderId) {
+
+
+
+        User user = userRepository.findByEmail(dto.getEmail()).get();
+
+        Orders orders = orderRepository.findByOrderId(orderId);
+
+        OrderProductBridge orderProductBridge = orderProductBridgeRepository.findById(orders.getOrderId()).get();
+
+        PurchasedProduct purchasedProduct = orderProductBridge.getPurchasedProduct();
+
+        if(orderRepository.existsByOrderIdAndUser(orderId,user)){
+            orderProductBridgeRepository.deleteByOrders(orders);
+            orderRepository.deleteByUser(user);
+            purchaseProductRepository.deleteByPurchasedProductId(purchasedProduct.getPurchasedProductId());
+        }
+
+
+//        
+
+        return new ResponseDTO<>("삭제 성공");
+    }
 
 }

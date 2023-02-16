@@ -45,5 +45,10 @@ public class ProductController {
          return productService.orderCheck(dto);
     }
 
+
+    @PostMapping("/product/order/delete")
+    public ResponseDTO<?> deleteBuy(@AuthenticationPrincipal LoginReqDTO dto,@RequestParam Long orderId){
+        return productService.deleteBuy(dto,orderId);
+    }
    
 }

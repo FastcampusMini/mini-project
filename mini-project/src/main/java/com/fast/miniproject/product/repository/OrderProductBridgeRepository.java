@@ -12,4 +12,7 @@ public interface OrderProductBridgeRepository extends JpaRepository<OrderProduct
 
     @Query(nativeQuery = true,value = "SELECT * FROM order_product as p WHERE p.orders IN (:orders_list)")
     List<OrderProductBridge> findAllByOrdersList(@Param("orders_list") List<Orders> orders_list);
+
+   void deleteByOrders(Orders orders);
+
 }
