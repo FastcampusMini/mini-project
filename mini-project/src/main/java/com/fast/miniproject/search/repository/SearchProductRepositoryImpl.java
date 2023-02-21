@@ -53,7 +53,13 @@ public class SearchProductRepositoryImpl extends QuerydslRepositorySupport imple
             case "brand":
                 return new BooleanBuilder().and(product.brand.contains(searchKeyword));
             case "price":
-                int price = Integer.parseInt(searchKeyword);
+                int price;
+                if (searchKeyword.isEmpty()) {
+                    price = 1000000000;
+                    //price로 검색할때 검색어가 없을때의 처리로 그냥 엄청 큰 값을 넣어 모든 product가 나오게 한다
+                } else {
+                    price = Integer.parseInt(searchKeyword);
+                }
                 return new BooleanBuilder().and(product.price.between(0, price));
         }
         return null;
