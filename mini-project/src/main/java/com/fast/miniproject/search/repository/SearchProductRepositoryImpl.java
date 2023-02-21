@@ -16,7 +16,8 @@ public class SearchProductRepositoryImpl extends QuerydslRepositorySupport imple
 
     public SearchProductRepositoryImpl() { super(Product.class); }
 
-    public Page<Product> searchByBuilder(String searchTarget, String searchKeyword, String sortTarget, String sortDirection, Pageable pageable) {
+    @Override
+    public Page<Product> searchQuery(String searchTarget, String searchKeyword, String sortTarget, String sortDirection, Pageable pageable) {
         QueryResults<Product> results =
                 from(product)
                         .where(productSearch(searchTarget, searchKeyword))

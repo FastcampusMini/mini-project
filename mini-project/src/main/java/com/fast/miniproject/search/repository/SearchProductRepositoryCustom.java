@@ -5,5 +5,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface SearchProductRepositoryCustom {
-    Page<Product> searchByBuilder(String searchTarget, String searchKeyword, String sortTarget, String sortKeyword, Pageable pageable);
+    Page<Product> searchQuery(String searchTarget, String searchKeyword, String sortTarget, String sortKeyword, Pageable pageable);
 }

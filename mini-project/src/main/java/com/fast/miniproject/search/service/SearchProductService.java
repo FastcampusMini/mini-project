@@ -14,7 +14,7 @@ public class SearchProductService {
     private final SearchProductRepository searchProductRepository;
 
     public Page<ProductDTO> searchProducts(String searchTarget, String searchKeyword, String sortTarget, String sortKeyword, Pageable pageable) {
-        return searchProductRepository.searchByBuilder(searchTarget, searchKeyword, sortTarget, sortKeyword, pageable)
+        return searchProductRepository.searchQuery(searchTarget, searchKeyword, sortTarget, sortKeyword, pageable)
                 .map(ProductDTO::new);
     }
 
