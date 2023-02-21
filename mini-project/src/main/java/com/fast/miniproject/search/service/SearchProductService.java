@@ -13,8 +13,8 @@ public class SearchProductService {
 
     private final SearchProductRepository searchProductRepository;
 
-    public Page<ProductDTO> searchProductsByName(String name, Pageable pageable) {
-        return searchProductRepository.findAllByNameContains(name, pageable)
+    public Page<ProductDTO> searchProducts(String searchTarget, String searchKeyword, String sortTarget, String sortKeyword, Pageable pageable) {
+        return searchProductRepository.searchByBuilder(searchTarget, searchKeyword, sortTarget, sortKeyword, pageable)
                 .map(ProductDTO::new);
     }
 
