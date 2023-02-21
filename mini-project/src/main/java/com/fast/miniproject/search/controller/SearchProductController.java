@@ -4,8 +4,6 @@ import com.fast.miniproject.global.response.PageResponseDTO;
 import com.fast.miniproject.global.response.ResponseDTO;
 import com.fast.miniproject.search.service.SearchProductService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +20,19 @@ public class SearchProductController {
 
     private final SearchProductService searchProductService;
     public static final int PAGE_SIZE = 10;
+
     @ApiOperation(value = "검색 결과 반환", notes = "검색어에 따른 상품 리스트 페이징과 함께 반환")
 
     @GetMapping
-    public ResponseDTO<PageResponseDTO> getProductByName(@RequestParam String name, @RequestParam(required = false, defaultValue = "1") String page) {
+    public ResponseDTO<PageResponseDTO> getProducts(
+            @RequestParam(required = false, defaultValue = "name") String searchTarget,
+            @RequestParam(required = false, defaultValue = "") String searchKeyword,
+            @RequestParam(required = false, defaultValue = "name") String sortTarget,
+            @RequestParam(required = false, defaultValue = "ASC") String sortDirection,
+            @RequestParam(required = false, defaultValue = "1") String page
+    ) {
         PageRequest pageRequest = null;
+
         try {
             int intPage = Integer.parseInt(page);
             pageRequest = PageRequest.of(intPage - 1, PAGE_SIZE);
@@ -37,7 +43,7 @@ public class SearchProductController {
             log.info(e.getMessage());
         }
 
-        PageResponseDTO pageResponseDTO = new PageResponseDTO(searchProductService.searchProductsByName(name, pageRequest));
+        PageResponseDTO pageResponseDTO = new PageResponseDTO(searchProductService.searchProducts(searchTarget, searchKeyword, sortTarget, sortDirection, pageRequest));
         return new ResponseDTO<PageResponseDTO>(pageResponseDTO);
     }
 }
