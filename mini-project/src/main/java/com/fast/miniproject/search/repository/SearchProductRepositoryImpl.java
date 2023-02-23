@@ -5,7 +5,9 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.util.List;
@@ -14,13 +16,15 @@ import static com.fast.miniproject.product.entity.QProduct.product;
 
 public class SearchProductRepositoryImpl extends QuerydslRepositorySupport implements SearchProductRepositoryCustom {
 
-    public SearchProductRepositoryImpl() { super(Product.class); }
+    public SearchProductRepositoryImpl() {
+        super(Product.class);
+    }
 
     @Override
-    public Page<Product> searchQuery(String searchTarget, String searchKeyword, String sortTarget, String sortDirection, Pageable pageable) {
+    public Page<Product> searchQuery(String searchTarget, String searchKeyword, String sortTarget, String sortDirection, Pageable pageable, BooleanBuilder booleanBuilder) {
         QueryResults<Product> results =
                 from(product)
-                        .where(productSearch(searchTarget, searchKeyword))
+                        .where(productSearch(searchTarget, searchKeyword), booleanBuilder)
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize())
                         .orderBy(productSort(sortTarget, sortDirection))
@@ -30,6 +34,11 @@ public class SearchProductRepositoryImpl extends QuerydslRepositorySupport imple
         long total = results.getTotal();
 
         return new PageImpl<>(content, pageable, total);
+    }
+
+    @Override
+    public BooleanBuilder searchQueryWithUser(Long availableAmount) {
+        return new BooleanBuilder().and(product.price.loe(availableAmount));
     }
 
     private OrderSpecifier<?> productSort(String sortTarget, String sortDirection) {
